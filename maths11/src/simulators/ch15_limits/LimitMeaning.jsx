@@ -1,81 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MathSlider } from '../../components/ui/MathSlider';
 import { FormulaCard } from '../../components/ui/FormulaCard';
 
 export const LimitMeaning = () => {
-  const [xVal, setXVal] = useState(2.1);
-  const target = 2; // limit as x -> 2
-  const f = (x) => 2 * x + 1; // 2x + 1, limit is 5
-  
-  const L = f(target);
-  const delta = Math.abs(xVal - target);
-  const epsilon = Math.abs(f(xVal) - L);
+  const [delta, setDelta] = useState(0.5);
+  const [zoom, setZoom] = useState(1);
+  const a = 2, L = 4; // f(x) = x^2
 
-  const w = 360, h = 240;
+  const epsilon = (a + delta)**2 - L;
+  const w = 400, h = 300;
   const padding = 40;
-  const graphW = w - 2 * padding;
-  const graphH = h - 2 * padding;
 
-  const mx = (x) => padding + (x / 4) * graphW;
-  const my = (y) => h - padding - (y / 8) * graphH;
-
-  const points = [];
-  for (let x = 0; x <= 4; x += 0.1) points.push([x, f(x)]);
+  // Coordinate mapping
+  const getX = (val) => padding + (val * 60 * zoom);
+  const getY = (val) => h - padding - (val * 15 * zoom);
 
   return (
-    <motion.div className="glass-panel" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} style={{ padding: '24px', display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
+    <motion.div className="glass-panel" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} style={{ padding: '24px', display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
       <div style={{ flex: 1, minWidth: '300px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
         <motion.div initial={{ opacity: 0, x: -15 }} animate={{ opacity: 1, x: 0 }}>
-          <h3 style={{ color: 'var(--teal)', marginBottom: '8px' }}>Concept of Limit</h3>
+          <h3 style={{ color: 'var(--gold)', marginBottom: '8px' }}>The Meaning of Limit (&epsilon;-&delta;)</h3>
           <p style={{ color: 'var(--text2)', fontSize: '0.9rem' }}>
-            As <strong>x</strong> approaches <em>a</em>, <strong>f(x)</strong> approaches <em>L</em>. Slide x towards 2 and watch f(x) get closer to 5.
+            For every <strong>&epsilon; &gt; 0</strong> (no matter how small), there exists a <strong>&delta; &gt; 0</strong> such that if 0 &lt; |x - a| &lt; &delta;, then |f(x) - L| &lt; &epsilon;.
           </p>
         </motion.div>
 
-        <MathSlider label="Value of x" min={1.5} max={2.5} step={0.01} value={xVal} onChange={setXVal} />
+        <MathSlider label="Delta (&delta;)" min={0.05} max={1} step={0.05} value={delta} onChange={setDelta} />
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-          <motion.div layout style={{ background: 'var(--bg4)', padding: '12px', borderRadius: '10px', textAlign: 'center', borderLeft: '3px solid var(--teal)' }}>
-            <div style={{ fontSize: '0.65rem', color: 'var(--text3)' }}>|x − 2| &lt; δ</div>
-            <div className="math-font" style={{ color: 'var(--teal)', fontWeight: 'bold' }}>δ = {delta.toFixed(3)}</div>
-          </motion.div>
-          <motion.div layout style={{ background: 'var(--bg4)', padding: '12px', borderRadius: '10px', textAlign: 'center', borderLeft: '3px solid var(--gold)' }}>
-            <div style={{ fontSize: '0.65rem', color: 'var(--text3)' }}>|f(x) − 5| &lt; ε</div>
-            <div className="math-font" style={{ color: 'var(--gold)', fontWeight: 'bold' }}>ε = {epsilon.toFixed(3)}</div>
-          </motion.div>
+        <div style={{ display: 'flex', gap: '8px' }}>
+           <button onClick={() => setZoom(zoom === 1 ? 2.5 : 1)} style={{ flex: 1, padding: '12px', background: zoom > 1 ? 'var(--gold)' : 'var(--bg4)', color: zoom > 1 ? 'black' : 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
+             {zoom > 1 ? '🔍 Zoom Out' : '🔍 Zoom into Neighborhood'}
+           </button>
         </div>
 
-        <FormulaCard title="ε-δ Definition" formula="∀ε > 0, ∃δ > 0 : 0 < |x−a| < δ ⇒ |f(x)−L| < ε" />
+        <motion.div layout style={{ background: 'var(--bg4)', padding: '16px', borderRadius: '12px', borderLeft: '4px solid var(--gold)' }}>
+          <div style={{ fontSize: '0.85rem', color: 'var(--text2)' }}>
+            <strong>&delta; = {delta.toFixed(2)}</strong> &rarr; <strong>&epsilon; &asymp; {epsilon.toFixed(2)}</strong>
+          </div>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text3)', marginTop: '4px' }}>
+            As &delta; shrinks, the neighborhood around L (4) also shrinks.
+          </div>
+        </motion.div>
+
+        <FormulaCard title="Formal Definition" formula="0 < |x - a| < \delta \implies |f(x) - L| < \epsilon" />
       </div>
 
-      <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }} style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <svg width={w} height={h} style={{ background: 'var(--bg2)', borderRadius: '12px', border: '1px solid var(--border)' }}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ flex: 1, background: 'var(--bg2)', borderRadius: '16px', padding: '10px', overflow: 'hidden', position: 'relative' }}>
+        <svg width={w} height={h} style={{ background: 'var(--bg2)' }}>
           {/* Axes */}
-          <line x1={padding} y1={h - padding} x2={w - 10} y2={h - padding} stroke="var(--border)" strokeWidth="1" />
-          <line x1={padding} y1={padding / 2} x2={padding} y2={h - padding} stroke="var(--border)" strokeWidth="1" />
+          <line x1={padding} y1={h - padding} x2={w - 10} y2={h - padding} stroke="white" strokeWidth="1" />
+          <line x1={padding} y1={h - padding} x2={padding} y2={10} stroke="white" strokeWidth="1" />
+
+          {/* Function f(x) = x^2 */}
+          <path d={Array.from({ length: 50 }, (_, i) => {
+            const vx = (i / 10);
+            return `${i === 0 ? 'M' : 'L'} ${getX(vx)} ${getY(vx * vx)}`;
+          }).join(' ')} fill="none" stroke="var(--gold)" strokeWidth="2" opacity="0.6" />
+
+          {/* Neighborhood Delta around a=2 */}
+          <rect x={getX(a - delta)} y={padding} width={getX(a + delta) - getX(a - delta)} height={h - 2 * padding} fill="rgba(255, 215, 0, 0.1)" />
           
-          {/* Curve */}
-          <path d={points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${mx(p[0])} ${my(p[1])}`).join(' ')} fill="none" stroke="var(--text3)" strokeWidth="1.5" opacity="0.3" />
+          {/* Neighborhood Epsilon around L=4 */}
+          <rect x={padding} y={getY((a+delta)**2)} width={w - 2 * padding} height={getY((a-delta)**2) - getY((a+delta)**2)} fill="rgba(255, 127, 80, 0.1)" />
 
-          {/* Limit Point (Target) */}
-          <circle cx={mx(target)} cy={my(L)} r={4} fill="var(--coral)" />
-          <line x1={mx(target)} y1={my(L)} x2={padding} y2={my(L)} stroke="var(--coral)" strokeWidth="1" strokeDasharray="3 2" opacity="0.5" />
-          <line x1={mx(target)} y1={my(L)} x2={mx(target)} y2={h - padding} stroke="var(--coral)" strokeWidth="1" strokeDasharray="3 2" opacity="0.5" />
-
-          {/* Current Point */}
-          <circle cx={mx(xVal)} cy={my(f(xVal))} r={6} fill="var(--teal)">
-            <animate attributeName="r" values="5;7;5" dur="1.5s" repeatCount="indefinite" />
-          </circle>
-          <line x1={mx(xVal)} y1={my(f(xVal))} x2={padding} y2={my(f(xVal))} stroke="var(--teal)" strokeWidth="1.5" strokeDasharray="4 2" />
-          <line x1={mx(xVal)} y1={my(f(xVal))} x2={mx(xVal)} y2={h - padding} stroke="var(--teal)" strokeWidth="1.5" strokeDasharray="4 2" />
+          {/* Highlight point (a, L) */}
+          <circle cx={getX(a)} cy={getY(L)} r="4" fill="var(--gold)" />
+          <line x1={getX(a)} y1={h - padding} x2={getX(a)} y2={getY(L)} stroke="var(--gold)" strokeDasharray="4" />
+          <line x1={padding} y1={getY(L)} x2={getX(a)} y2={getY(L)} stroke="var(--gold)" strokeDasharray="4" />
 
           {/* Labels */}
-          <text x={mx(target)} y={h - 15} fill="var(--coral)" fontSize="10" textAnchor="middle">a=2</text>
-          <text x={padding - 10} y={my(L)} fill="var(--coral)" fontSize="10" textAnchor="end" dominantBaseline="middle">L=5</text>
-          <text x={mx(xVal)} y={h - 5} fill="var(--teal)" fontSize="10" textAnchor="middle">x</text>
-          <text x={padding - 5} y={my(f(xVal))} fill="var(--teal)" fontSize="10" textAnchor="end" dominantBaseline="middle">f(x)</text>
+          <text x={getX(a)} y={h - padding + 20} fill="var(--gold)" fontSize="10" textAnchor="middle">a=2</text>
+          <text x={padding - 15} y={getY(L)} fill="var(--gold)" fontSize="10" textAnchor="end">L=4</text>
         </svg>
+        
+        {zoom > 1 && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ position: 'absolute', top: 10, right: 10, background: 'rgba(0,0,0,0.5)', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', color: 'var(--gold)' }}>
+                ZOOMED 2.5x
+            </motion.div>
+        )}
       </motion.div>
     </motion.div>
   );
