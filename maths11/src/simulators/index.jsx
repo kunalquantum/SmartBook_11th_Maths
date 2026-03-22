@@ -83,10 +83,11 @@ import { AlgebraicLimits } from './ch15_limits/AlgebraicLimits';
 import { TrigLimits } from './ch15_limits/TrigLimits';
 import { ExpLogLimits } from './ch15_limits/ExpLogLimits';
 
-import { DerivativePoint } from './ch16_ders/DerivativePoint';
-import { DerivativeFunction } from './ch16_ders/DerivativeFunction';
-import { AlgebraicDerivatives } from './ch16_ders/AlgebraicDerivatives';
-import { TrigDerivatives } from './ch16_ders/TrigDerivatives';
+import { FirstPrinciple } from './ch16_ders/FirstPrinciple.jsx';
+import { DerivativePoint } from './ch16_ders/DerivativePoint.jsx';
+import { DerivativeFunction } from './ch16_ders/DerivativeFunction.jsx';
+import { AlgebraicDerivatives } from './ch16_ders/AlgebraicDerivatives.jsx';
+import { TrigDerivatives } from './ch16_ders/TrigDerivatives.jsx';
 
 export const TopicSimulators = {
   // Chapter 1: Angle and its Measurement
@@ -189,14 +190,11 @@ export const TopicSimulators = {
   '15-4': ExpLogLimits,
 
   // Chapter 16: Derivatives
-  '16-0': DerivativePoint,
-  '16-1': DerivativeFunction,
-  '16-2': AlgebraicDerivatives,
-  '16-3': TrigDerivatives,
+  '16-0': FirstPrinciple,
+  '16-1': DerivativePoint,
+  '16-2': DerivativeFunction,
+  '16-3': AlgebraicDerivatives,
+  '16-4': TrigDerivatives,
   
-  // Future chapters will be mapped here
 };
-
-
-
 

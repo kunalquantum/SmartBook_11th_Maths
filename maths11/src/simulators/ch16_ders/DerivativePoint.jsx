@@ -1,70 +1,94 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MathSlider } from '../../components/ui/MathSlider';
 import { FormulaCard } from '../../components/ui/FormulaCard';
 
 export const DerivativePoint = () => {
-  const [xVal, setXVal] = useState(1);
-  const f = (x) => 0.5 * x * x; // f(x) = 0.5x^2
-  const df = (x) => x; // f'(x) = x
+  const [point, setPoint] = useState(2);
+  const [zoom, setZoom] = useState(1);
 
-  const slope = df(xVal);
-  const yVal = f(xVal);
+  // f(x) = x^2 / 4
+  const f = (x) => (x * x) / 4;
+  const df = (x) => x / 2;
 
-  const w = 360, h = 240, p = 40;
-  const mx = (x) => p + ((x + 2) / 4) * (w - 2 * p);
-  const my = (y) => h - p - (y / 4) * (h - 2 * p);
+  const w = 400, h_svg = 300;
+  const padding = 50;
 
-  const points = [];
-  for (let x = -2; x <= 2; x += 0.1) points.push([x, f(x)]);
+  const getX = (val) => padding + (val * 60 * zoom);
+  const getY = (val) => h_svg - padding - (f(val) * 40 * zoom);
 
-  // Tangent line points
-  const t1 = [xVal - 1, yVal - slope];
-  const t2 = [xVal + 1, yVal + slope];
+  const px = getX(point);
+  const py = getY(point);
+  const slope = df(point);
+  const angle = Math.atan(slope) * (180 / Math.PI);
 
   return (
-    <motion.div className="glass-panel" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} style={{ padding: '24px', display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
+    <motion.div className="glass-panel" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} style={{ padding: '24px', display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
       <div style={{ flex: 1, minWidth: '300px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
         <motion.div initial={{ opacity: 0, x: -15 }} animate={{ opacity: 1, x: 0 }}>
-          <h3 style={{ color: 'var(--teal)', marginBottom: '8px' }}>Derivative at a Point</h3>
+          <h3 style={{ color: 'var(--gold)', marginBottom: '8px' }}>Derivative at a Point</h3>
           <p style={{ color: 'var(--text2)', fontSize: '0.9rem' }}>
-            The derivative represents the <strong>slope</strong> of the tangent line at a specific point.
+            The derivative <strong>f'(a)</strong> is the <strong>slope</strong> of the tangent line at <strong>x = a</strong>. 
+            Zoom in to see how the curve looks like a straight line locally!
           </p>
         </motion.div>
 
-        <MathSlider label="Point x" min={-1.8} max={1.8} step={0.1} value={xVal} onChange={setXVal} />
+        <MathSlider label="Position a" min={0.1} max={5} step={0.1} value={point} onChange={setPoint} />
 
-        <motion.div layout style={{ background: 'var(--bg4)', padding: '16px', borderRadius: '12px', textAlign: 'center', borderLeft: '4px solid var(--teal)' }}>
-          <div style={{ fontSize: '0.7rem', color: 'var(--text3)', textTransform: 'uppercase' }}>Slope (f'(x))</div>
-          <div className="math-font" style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--teal)' }}>
-            m = {slope.toFixed(2)}
+        <div style={{ display: 'flex', gap: '8px' }}>
+           <button onClick={() => setZoom(zoom === 1 ? 3 : 1)} style={{ flex: 1, padding: '12px', background: zoom > 1 ? 'var(--gold)' : 'var(--bg4)', color: zoom > 1 ? 'black' : 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
+             {zoom > 1 ? '🔍 Zoom Out' : '🔍 Local Zoom (Linearity)'}
+           </button>
+        </div>
+
+        <motion.div layout style={{ background: 'var(--bg4)', padding: '20px', borderRadius: '16px', textAlign: 'center', borderLeft: '4px solid var(--gold)' }}>
+          <div className="math-font" style={{ fontSize: '1rem', color: 'var(--text3)' }}>
+             Slope of Tangent at x={point}:
           </div>
+          <div style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--gold)' }}>
+             m = {slope.toFixed(3)}
+          </div>
+          <motion.div animate={{ rotate: -angle }} style={{ display: 'inline-block', width: '30px', height: '4px', background: 'var(--gold)', borderRadius: '2px', marginTop: '10px' }} />
         </motion.div>
 
-        <FormulaCard title="Derivative Definition" formula="f'(a) = lim_{h&rarr;0} \frac{f(a+h) - f(a)}{h}" />
+        <FormulaCard title="Equation" formula={`y - f(a) = f'(a)(x - a)`} />
       </div>
 
-      <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }} style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <svg width={w} height={h} style={{ background: 'var(--bg2)', borderRadius: '12px', border: '1px solid var(--border)' }}>
-          <line x1={0} y1={h - p} x2={w} y2={h - p} stroke="var(--border)" strokeWidth="0.5" />
-          <line x1={w / 2} y1={0} x2={w / 2} y2={h} stroke="var(--border)" strokeWidth="0.5" />
-          
-          <path d={points.map((pt, i) => `${i === 0 ? 'M' : 'L'} ${mx(pt[0])} ${my(pt[1])}`).join(' ')} fill="none" stroke="var(--text3)" strokeWidth="1" opacity="0.3" />
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ flex: 1, background: 'var(--bg2)', borderRadius: '16px', overflow: 'hidden', position: 'relative' }}>
+        <svg width={w} height={h_svg}>
+          {/* Grid */}
+          <line x1={padding} y1={h_svg-padding} x2={w-10} y2={h_svg-padding} stroke="white" strokeWidth="1" opacity="0.3" />
+          <line x1={padding} y1={h_svg-padding} x2={padding} y2={10} stroke="white" strokeWidth="1" opacity="0.3" />
+
+          {/* Curve */}
+          <path d={Array.from({ length: 60 }, (_, i) => {
+            const vx = (i / 10);
+            return `${i === 0 ? 'M' : 'L'} ${getX(vx)} ${getY(vx)}`;
+          }).join(' ')} fill="none" stroke="var(--gold)" strokeWidth="2" opacity="0.6" />
 
           {/* Tangent Line */}
-          <motion.line
-            animate={{ x1: mx(t1[0]), y1: my(t1[1]), x2: mx(t2[0]), y2: my(t2[1]) }}
-            stroke="var(--teal)" strokeWidth="2"
+          <line 
+             x1={getX(point - 1)} 
+             y1={getY(point) + slope * 60 * zoom} 
+             x2={getX(point + 1)} 
+             y2={getY(point) - slope * 60 * zoom} 
+             stroke="white" 
+             strokeWidth="1.5"
           />
 
-          {/* Point */}
-          <motion.circle
-            animate={{ cx: mx(xVal), cy: my(yVal) }}
-            r={5} fill="var(--teal)"
-          />
-          
-          <text x={w - 10} y={h - p + 15} fill="var(--text3)" fontSize="10" textAnchor="end">f(x) = 0.5x&sup2;</text>
+          {/* Rolling Ball */}
+          <motion.g animate={{ x: px, y: py, rotate: -angle }}>
+             <circle cx="0" cy="-8" r="8" fill="var(--teal)" stroke="white" strokeWidth="2" />
+             <line x1="-5" y1="-8" x2="5" y2="-8" stroke="white" strokeWidth="1" />
+          </motion.g>
+
+          {/* Labels */}
+          <text x={px} y={py + 25} fill="var(--gold)" fontSize="10" textAnchor="middle">a={point}</text>
         </svg>
+
+        <div style={{ position: 'absolute', bottom: 10, right: 10, fontSize: '0.7rem', color: 'var(--text3)' }}>
+           Tilt represents rate of change.
+        </div>
       </motion.div>
     </motion.div>
   );
