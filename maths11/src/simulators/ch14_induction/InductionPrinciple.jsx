@@ -3,101 +3,93 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FormulaCard } from '../../components/ui/FormulaCard';
 
 export const InductionPrinciple = () => {
-  const [n, setN] = useState(1);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [fallenCount, setFallenCount] = useState(0);
-
-  const maxDominoes = 12;
-
-  useEffect(() => {
-    if (!isAnimating) return;
-    let count = 0;
-    const interval = setInterval(() => {
-      count++;
-      setFallenCount(count);
-      if (count >= maxDominoes) {
-        clearInterval(interval);
-        setIsAnimating(false);
-      }
-    }, 400);
-    return () => clearInterval(interval);
-  }, [isAnimating]);
-
-  const handleStart = () => {
-    setFallenCount(0);
-    setIsAnimating(true);
+  const [isPushed, setIsPushed] = useState(false);
+  const [chainBroken, setChainBroken] = useState(false);
+  const [dominoCount, setDominoCount] = useState(10);
+  
+  const reset = () => {
+    setIsPushed(false);
   };
 
+  const togglePush = () => {
+    setIsPushed(true);
+  };
+
+  useEffect(() => {
+    reset();
+  }, [chainBroken, dominoCount]);
+
+  const w = 400, h = 200;
+  
   return (
     <motion.div className="glass-panel" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} style={{ padding: '24px', display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
       <div style={{ flex: 1, minWidth: '300px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
         <motion.div initial={{ opacity: 0, x: -15 }} animate={{ opacity: 1, x: 0 }}>
-          <h3 style={{ color: 'var(--teal)', marginBottom: '8px' }}>Principle of Mathematical Induction</h3>
+          <h3 style={{ color: 'var(--teal)', marginBottom: '8px' }}>The Principle of Mathematical Induction</h3>
           <p style={{ color: 'var(--text2)', fontSize: '0.9rem' }}>
-            Like a row of dominoes: if the first falls (P(1) is true) and each falling domino knocks the next (P(k) ⇒ P(k+1)), then all will fall.
+            Imagine a row of dominoes. To knock them all down:
+            1. Knock the <strong>first</strong> one (Base Case).
+            2. Ensure that if one falls, the <strong>next</strong> one falls (Inductive Step).
           </p>
         </motion.div>
 
-        <div style={{ background: 'var(--bg4)', padding: '16px', borderRadius: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.85rem', color: isAnimating || fallenCount > 0 ? 'var(--teal)' : 'var(--text3)' }}>Step 1: P(1) is true</span>
-            <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: fallenCount >= 1 ? 'var(--teal)' : 'var(--bg2)', border: '1px solid var(--border)' }} />
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.85rem', color: fallenCount > 1 ? 'var(--gold)' : 'var(--text3)' }}>Step 2: P(k) is true</span>
-            <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: fallenCount > 1 ? 'var(--gold)' : 'var(--bg2)', border: '1px solid var(--border)' }} />
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.85rem', color: fallenCount > 2 ? 'var(--coral)' : 'var(--text3)' }}>Step 3: P(k+1) is true</span>
-            <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: fallenCount > 2 ? 'var(--coral)' : 'var(--bg2)', border: '1px solid var(--border)' }} />
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={togglePush} disabled={isPushed} style={{ flex: 1, padding: '12px', background: isPushed ? 'var(--bg4)' : 'var(--teal)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
+            {isPushed ? 'Falling...' : '👉 Push First Domino (P(1))'}
+          </motion.button>
+          
+          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setChainBroken(!chainBroken)} style={{ padding: '12px', background: 'var(--bg4)', color: chainBroken ? 'var(--coral)' : 'var(--text2)', border: chainBroken ? '1px solid var(--coral)' : '1px solid var(--border)', borderRadius: '8px', cursor: 'pointer' }}>
+            {chainBroken ? '🔗 Fix Chain' : '✂️ Break Chain (P(k) ↛ P(k+1))'}
+          </motion.button>
+
+          <button onClick={reset} style={{ padding: '12px', background: 'var(--bg4)', color: 'var(--text2)', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>🔄 Reset</button>
+        </div>
+
+        <div style={{ background: 'var(--bg4)', padding: '16px', borderRadius: '12px', borderLeft: '4px solid var(--teal)' }}>
+          <div style={{ fontSize: '0.85rem', color: 'var(--text2)' }}>
+            <strong>Logic:</strong> {isPushed ? (chainBroken ? 'Chain broke! Not all statements are true.' : 'Success! All statements are true for all n.') : 'Ready to start the proof...'}
           </div>
         </div>
 
-        <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} onClick={handleStart} style={{ padding: '12px', background: 'var(--teal)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}>
-          {isAnimating ? 'Falling...' : 'Start Chain Reaction'}
-        </motion.button>
-
-        <FormulaCard title="The Principle" formula="P(1) ∧ (∀k, P(k) → P(k+1)) ⇒ ∀n, P(n)" />
+        <FormulaCard title="The Two Steps" formula="P(1) \text{ is true} \\ P(k) \Rightarrow P(k+1)" />
       </div>
 
-      <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }} style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px', background: 'var(--bg2)', borderRadius: '16px', border: '1px solid var(--border)', position: 'relative' }}>
-        <div style={{ display: 'flex', gap: '15px', padding: '20px', alignItems: 'flex-end' }}>
-          {Array.from({ length: maxDominoes }).map((_, i) => {
-            const isFallen = i < fallenCount;
+      <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }} style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'var(--bg2)', borderRadius: '16px', padding: '20px', minHeight: '200px' }}>
+        <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
+          {Array.from({ length: dominoCount }).map((_, i) => {
+            const x = 40 + i * 35;
+            const y = h - 60;
+            const isBrokenGap = chainBroken && i === 4;
+            const willFall = isPushed && (!chainBroken || i <= 4);
+            
             return (
-              <motion.div
-                key={i}
-                animate={{ 
-                  rotate: isFallen ? 75 : 0,
-                  x: isFallen ? i * 2 : 0,
-                }}
-                transition={{ type: 'spring', damping: 12, stiffness: 100 }}
-                style={{
-                  width: '12px',
-                  height: '60px',
-                  background: isFallen ? 'var(--teal)' : 'var(--bg4)',
-                  borderRadius: '3px',
-                  boxShadow: isFallen ? '0 0 10px var(--teal)' : 'none',
-                  originX: 0.5,
-                  originY: 1,
-                  position: 'relative',
-                  border: '1px solid var(--border)',
-                }}
-              >
-                <div style={{ position: 'absolute', top: '5px', left: '50%', transform: 'translateX(-50%)', width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }} />
-                <div style={{ position: 'absolute', bottom: '10px', left: '50%', transform: 'translateX(-50%)', fontSize: '8px', color: 'var(--text3)', rotate: isFallen ? -75 : 0 }}>
-                  {i + 1}
-                </div>
-              </motion.div>
+              <motion.g key={i}>
+                <motion.rect
+                  initial={{ rotate: 0 }}
+                  animate={{ 
+                    rotate: willFall ? 75 : 0,
+                    x: isBrokenGap ? x + 10 : x
+                  }}
+                  transition={{ 
+                    delay: willFall ? i * 0.15 : 0, 
+                    type: 'spring', 
+                    stiffness: 50 
+                  }}
+                  width="10"
+                  height="50"
+                  fill={isBrokenGap ? 'var(--coral)' : (i === 0 ? 'var(--teal)' : 'var(--bg4)')}
+                  stroke={i === 0 ? 'var(--teal)' : 'var(--border)'}
+                  rx="2"
+                  y={y}
+                />
+                <text x={isBrokenGap ? x+15 : x+5} y={y + 65} fontSize="8" fill="var(--text3)" textAnchor="middle">P({i+1})</text>
+                {isBrokenGap && (
+                   <text x={x + 3} y={y + 25} fontSize="12" fill="var(--coral)" textAnchor="middle" fontWeight="bold">!</text>
+                )}
+              </motion.g>
             );
           })}
-        </div>
-        
-        {fallenCount > 0 && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ position: 'absolute', top: '20px', right: '20px', fontSize: '0.7rem', color: 'var(--teal)', fontWeight: 'bold' }}>
-            Proved up to n = {fallenCount}
-          </motion.div>
-        )}
+        </svg>
       </motion.div>
     </motion.div>
   );
