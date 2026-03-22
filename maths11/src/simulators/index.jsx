@@ -36,6 +36,11 @@ import { EllipseSim } from './ch07_conics/EllipseSim';
 import { HyperbolaSim } from './ch07_conics/HyperbolaSim';
 import { FocusEquations } from './ch07_conics/FocusEquations';
 
+import { RangeSim } from './ch08_dispersion/RangeSim';
+import { VarianceSim } from './ch08_dispersion/VarianceSim';
+import { StdDevSim } from './ch08_dispersion/StdDevSim';
+import { CoefficientVar } from './ch08_dispersion/CoefficientVar';
+
 export const TopicSimulators = {
   // Chapter 1: Angle and its Measurement
   '1-0': DirectedAngles,
@@ -80,6 +85,12 @@ export const TopicSimulators = {
   '7-2': EllipseSim,
   '7-3': HyperbolaSim,
   '7-4': FocusEquations,
+
+  // Chapter 8: Measures of Dispersion
+  '8-0': RangeSim,
+  '8-1': VarianceSim,
+  '8-2': StdDevSim,
+  '8-3': CoefficientVar,
   
   // Future chapters will be mapped here
 };
