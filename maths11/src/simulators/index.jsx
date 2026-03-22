@@ -30,6 +30,12 @@ import { TangentCondition as CircleCondition } from './ch06_circle/TangentCondit
 import { ParametricEquations as CircleParametric } from './ch06_circle/ParametricEquations';
 import { PointPosition as CirclePosition } from './ch06_circle/PointPosition';
 
+import { ConicTypes } from './ch07_conics/ConicTypes';
+import { ParabolaSim } from './ch07_conics/ParabolaSim';
+import { EllipseSim } from './ch07_conics/EllipseSim';
+import { HyperbolaSim } from './ch07_conics/HyperbolaSim';
+import { FocusEquations } from './ch07_conics/FocusEquations';
+
 export const TopicSimulators = {
   // Chapter 1: Angle and its Measurement
   '1-0': DirectedAngles,
@@ -67,6 +73,13 @@ export const TopicSimulators = {
   '6-2': CircleCondition,
   '6-3': CircleParametric,
   '6-4': CirclePosition,
+
+  // Chapter 7: Conic Sections
+  '7-0': ConicTypes,
+  '7-1': ParabolaSim,
+  '7-2': EllipseSim,
+  '7-3': HyperbolaSim,
+  '7-4': FocusEquations,
   
   // Future chapters will be mapped here
 };
