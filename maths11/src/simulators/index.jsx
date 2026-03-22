@@ -41,6 +41,13 @@ import { VarianceSim } from './ch08_dispersion/VarianceSim';
 import { StdDevSim } from './ch08_dispersion/StdDevSim';
 import { CoefficientVar } from './ch08_dispersion/CoefficientVar';
 
+import { AlgebraEvents } from './ch09_probability/AlgebraEvents';
+import { ProbDefinition } from './ch09_probability/ProbDefinition';
+import { AdditionTheorem } from './ch09_probability/AdditionTheorem';
+import { ConditionalProb } from './ch09_probability/ConditionalProb';
+import { MultiplicationThm } from './ch09_probability/MultiplicationThm';
+import { BayesTheorem } from './ch09_probability/BayesTheorem';
+
 export const TopicSimulators = {
   // Chapter 1: Angle and its Measurement
   '1-0': DirectedAngles,
@@ -91,6 +98,15 @@ export const TopicSimulators = {
   '8-1': VarianceSim,
   '8-2': StdDevSim,
   '8-3': CoefficientVar,
+
+  // Chapter 9: Probability
+  '9-0': AlgebraEvents,
+  '9-1': ProbDefinition,
+  '9-2': AdditionTheorem,
+  '9-3': ConditionalProb,
+  '9-4': MultiplicationThm,
+  '9-5': BayesTheorem,
   
   // Future chapters will be mapped here
 };
+
