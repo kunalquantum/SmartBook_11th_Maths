@@ -24,6 +24,12 @@ import { LineForms } from './ch05_lines/LineForms';
 import { LineAngles } from './ch05_lines/LineAngles';
 import { FamilyOfLines } from './ch05_lines/FamilyOfLines';
 
+import { EquationBuilder as CircleEquation } from './ch06_circle/EquationBuilder';
+import { TangentNormal as CircleTangent } from './ch06_circle/TangentNormal';
+import { TangentCondition as CircleCondition } from './ch06_circle/TangentCondition';
+import { ParametricEquations as CircleParametric } from './ch06_circle/ParametricEquations';
+import { PointPosition as CirclePosition } from './ch06_circle/PointPosition';
+
 export const TopicSimulators = {
   // Chapter 1: Angle and its Measurement
   '1-0': DirectedAngles,
@@ -54,6 +60,13 @@ export const TopicSimulators = {
   '5-2': LineForms,
   '5-3': LineAngles,
   '5-4': FamilyOfLines,
+
+  // Chapter 6: Circle
+  '6-0': CircleEquation,
+  '6-1': CircleTangent,
+  '6-2': CircleCondition,
+  '6-3': CircleParametric,
+  '6-4': CirclePosition,
   
   // Future chapters will be mapped here
 };
