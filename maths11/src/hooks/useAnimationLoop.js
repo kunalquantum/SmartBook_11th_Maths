@@ -1,27 +1,38 @@
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-export const useAnimationLoop = (callback, isRunning = true) => {
-  const requestRef = useRef();
-  const previousTimeRef = useRef();
-
-  const animate = time => {
-    if (previousTimeRef.current != undefined) {
-      const deltaTime = time - previousTimeRef.current;
-      callback(deltaTime);
-    }
-    previousTimeRef.current = time;
-    if (isRunning) {
-      requestRef.current = requestAnimationFrame(animate);
-    }
-  };
+export const useAnimationLoop = (isRunning, maxFrames = 100, fps = 60) => {
+  const [frame, setFrame] = useState(0);
+  const lastTimeRef = useRef(0);
+  const frameInterval = 1000 / fps;
 
   useEffect(() => {
+    let requestRef;
+    
+    const animate = (time) => {
+      if (!lastTimeRef.current) lastTimeRef.current = time;
+      const deltaTime = time - lastTimeRef.current;
+
+      if (isRunning && deltaTime >= frameInterval) {
+        setFrame((prev) => {
+          if (prev >= maxFrames) {
+            return maxFrames;
+          }
+          return prev + 1;
+        });
+        lastTimeRef.current = time - (deltaTime % frameInterval);
+      }
+      
+      requestRef = requestAnimationFrame(animate);
+    };
+
     if (isRunning) {
-      requestRef.current = requestAnimationFrame(animate);
+      requestRef = requestAnimationFrame(animate);
     } else {
-      cancelAnimationFrame(requestRef.current);
-      previousTimeRef.current = undefined;
+      lastTimeRef.current = 0;
     }
-    return () => cancelAnimationFrame(requestRef.current);
-  }, [isRunning, callback]);
+
+    return () => cancelAnimationFrame(requestRef);
+  }, [isRunning, maxFrames, frameInterval]);
+
+  return { frame, setFrame };
 };

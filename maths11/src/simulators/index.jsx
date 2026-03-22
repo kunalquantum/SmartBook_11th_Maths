@@ -18,6 +18,12 @@ import { CramersRule } from './ch04_matrices/CramersRule';
 import { MatrixTypes } from './ch04_matrices/MatrixTypes';
 import { MatrixAlgebra } from './ch04_matrices/MatrixAlgebra';
 
+import { Locus } from './ch05_lines/Locus';
+import { SlopeBuilder } from './ch05_lines/SlopeBuilder';
+import { LineForms } from './ch05_lines/LineForms';
+import { LineAngles } from './ch05_lines/LineAngles';
+import { FamilyOfLines } from './ch05_lines/FamilyOfLines';
+
 export const TopicSimulators = {
   // Chapter 1: Angle and its Measurement
   '1-0': DirectedAngles,
@@ -41,6 +47,13 @@ export const TopicSimulators = {
   '4-2': CramersRule,
   '4-3': MatrixTypes,
   '4-4': MatrixAlgebra,
+
+  // Chapter 5: Straight Lines
+  '5-0': Locus,
+  '5-1': SlopeBuilder,
+  '5-2': LineForms,
+  '5-3': LineAngles,
+  '5-4': FamilyOfLines,
   
   // Future chapters will be mapped here
 };
