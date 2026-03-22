@@ -55,6 +55,18 @@ import { Relations } from './ch10_sets/Relations';
 import { FunctionTypes } from './ch10_sets/FunctionTypes';
 import { DomainRange } from './ch10_sets/DomainRange';
 
+import { ComplexAlgebra } from './ch11_complex/ComplexAlgebra';
+import { ArgandDiagram } from './ch11_complex/ArgandDiagram';
+import { PolarForm } from './ch11_complex/PolarForm';
+import { ExponentialForm } from './ch11_complex/ExponentialForm';
+import { DeMoivre } from './ch11_complex/DeMoivre';
+
+import { ArithmeticProgression } from './ch12_sequences/ArithmeticProgression';
+import { GeometricProgression } from './ch12_sequences/GeometricProgression';
+import { GPSum } from './ch12_sequences/GP_Sum';
+import { HarmonicProgression } from './ch12_sequences/HarmonicProgression';
+import { AGProgression } from './ch12_sequences/AG_Progression';
+
 export const TopicSimulators = {
   // Chapter 1: Angle and its Measurement
   '1-0': DirectedAngles,
@@ -121,8 +133,20 @@ export const TopicSimulators = {
   '10-3': Relations,
   '10-4': FunctionTypes,
   '10-5': DomainRange,
+
+  // Chapter 11: Complex Numbers
+  '11-0': ComplexAlgebra,
+  '11-1': ArgandDiagram,
+  '11-2': PolarForm,
+  '11-3': ExponentialForm,
+  '11-4': DeMoivre,
+
+  // Chapter 12: Sequences and Series
+  '12-0': ArithmeticProgression,
+  '12-1': GeometricProgression,
+  '12-2': GPSum,
+  '12-3': HarmonicProgression,
+  '12-4': AGProgression,
   
   // Future chapters will be mapped here
 };
-
-
