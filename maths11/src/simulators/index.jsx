@@ -48,6 +48,13 @@ import { ConditionalProb } from './ch09_probability/ConditionalProb';
 import { MultiplicationThm } from './ch09_probability/MultiplicationThm';
 import { BayesTheorem } from './ch09_probability/BayesTheorem';
 
+import { SetTypes } from './ch10_sets/SetTypes';
+import { VennDiagrams } from './ch10_sets/VennDiagrams';
+import { SetOperations } from './ch10_sets/SetOperations';
+import { Relations } from './ch10_sets/Relations';
+import { FunctionTypes } from './ch10_sets/FunctionTypes';
+import { DomainRange } from './ch10_sets/DomainRange';
+
 export const TopicSimulators = {
   // Chapter 1: Angle and its Measurement
   '1-0': DirectedAngles,
@@ -106,7 +113,16 @@ export const TopicSimulators = {
   '9-3': ConditionalProb,
   '9-4': MultiplicationThm,
   '9-5': BayesTheorem,
+
+  // Chapter 10: Sets, Relations and Functions
+  '10-0': SetTypes,
+  '10-1': VennDiagrams,
+  '10-2': SetOperations,
+  '10-3': Relations,
+  '10-4': FunctionTypes,
+  '10-5': DomainRange,
   
   // Future chapters will be mapped here
 };
+
 
