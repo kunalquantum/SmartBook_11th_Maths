@@ -12,6 +12,12 @@ import { SumDifference } from './ch03_trig2/SumDifference';
 import { DoubleAngle } from './ch03_trig2/DoubleAngle';
 import { Factorization } from './ch03_trig2/Factorization';
 
+import { DeterminantExpander } from './ch04_matrices/DeterminantExpander';
+import { DeterminantProperties } from './ch04_matrices/DeterminantProperties';
+import { CramersRule } from './ch04_matrices/CramersRule';
+import { MatrixTypes } from './ch04_matrices/MatrixTypes';
+import { MatrixAlgebra } from './ch04_matrices/MatrixAlgebra';
+
 export const TopicSimulators = {
   // Chapter 1: Angle and its Measurement
   '1-0': DirectedAngles,
@@ -28,6 +34,13 @@ export const TopicSimulators = {
   '3-0': SumDifference,
   '3-1': DoubleAngle,
   '3-2': Factorization,
+
+  // Chapter 4: Determinants and Matrices
+  '4-0': DeterminantExpander,
+  '4-1': DeterminantProperties,
+  '4-2': CramersRule,
+  '4-3': MatrixTypes,
+  '4-4': MatrixAlgebra,
   
   // Future chapters will be mapped here
 };
