@@ -1,98 +1,98 @@
 export const chapters = [
   {
     id: '1',
-    title: 'Sets',
-    description: 'Introduction to sets, representations, operations and Venn diagrams.',
-    topics: ['Concept of Sets', 'Empty Set', 'Finite and Infinite Sets', 'Equal Sets', 'Subsets', 'Power Set', 'Universal Set', 'Venn Diagrams', 'Operations on Sets', 'Complement of a Set']
+    title: 'Angle and its Measurement',
+    description: 'Degree↔radian converter, arc length, sector area',
+    topics: ['Directed Angles', 'Systems of Measurement of Angles', 'Relation between Degree and Radian', 'Length of an arc and Area of a sector']
   },
   {
     id: '2',
-    title: 'Relations and Functions',
-    description: 'Cartesian product, relations, and various types of functions.',
-    topics: ['Cartesian Product', 'Relations', 'Functions', 'Domain and Range', 'Algebra of Real Functions']
+    title: 'Trigonometry - 1',
+    description: 'Unit circle, sin/cos/tan live, trig identities',
+    topics: ['Trigonometric functions with the help of unit circle', 'Trigonometric functions of particular angles', 'Fundamental Identities']
   },
   {
     id: '3',
-    title: 'Trigonometric Functions',
-    description: 'Angles, circular measure, and trigonometric identities.',
-    topics: ['Angles', 'Trigonometric Functions', 'Sign of Trigonometric Functions', 'Trigonometric Functions of Sum and Difference of Two Angles', 'Trigonometric Equations']
+    title: 'Trigonometry - 2',
+    description: 'Compound angles, sum-to-product, inverse trig',
+    topics: ['Trigonometric functions of sum and difference', 'Trigonometric functions of multiple angles', 'Factorization formulae']
   },
   {
     id: '4',
-    title: 'Principle of Mathematical Induction',
-    description: 'Proving mathematical statements along with their applications.',
-    topics: ['Motivation', 'The Principle of Mathematical Induction']
+    title: 'Determinants and Matrices',
+    description: "Matrix operations, determinant expander, Cramer's rule",
+    topics: ['Value of a Determinant', 'Properties of Determinants', 'Applications of Determinants', 'Types of Matrices', 'Algebra of Matrices']
   },
   {
     id: '5',
-    title: 'Complex Numbers and Quadratic Equations',
-    description: 'Algebra of complex numbers and solutions to quadratic equations.',
-    topics: ['Complex Numbers', 'Algebra of Complex Numbers', 'The Modulus and the Conjugate', 'Argand Plane and Polar Representation', 'Quadratic Equations']
+    title: 'Straight Lines',
+    description: 'Slope builder, line forms, angle between lines',
+    topics: ['Locus of a point', 'Equations of Line in Standard Forms', 'General Equation of a Line', 'Distance of a Point from a Line', 'Family of Lines']
   },
   {
     id: '6',
-    title: 'Linear Inequalities',
-    description: 'Algebraic solutions of linear inequalities in one and two variables.',
-    topics: ['Inequalities', 'Algebraic Solutions of Linear Inequalities in One Variable', 'Graphical Solution of Linear Inequalities in Two Variables', 'Solution of System of Linear Inequalities']
+    title: 'Circle',
+    description: 'Equation builder, tangent/normal, chord of contact',
+    topics: ['Standard Equation of a Circle', 'General Equation of a Circle', 'Parametric Equations of a Circle', 'Tangent to a Circle', 'Condition of tangency']
   },
   {
     id: '7',
-    title: 'Permutations and Combinations',
-    description: 'Fundamental principle of counting, permutations, and combinations.',
-    topics: ['Fundamental Principle of Counting', 'Permutations', 'Combinations']
+    title: 'Conic Sections',
+    description: 'Parabola/ellipse/hyperbola — drag focus, live curve',
+    topics: ['Definition and Types of Conics', 'Parabola', 'Ellipse', 'Hyperbola', 'Standard Equations and Focus']
   },
   {
     id: '8',
-    title: 'Binomial Theorem',
-    description: 'Binomial theorem for positive integral indices and its applications.',
-    topics: ['History, Statement and Proof', 'General and Middle Terms']
+    title: 'Measures of Dispersion',
+    description: 'Mean deviation, SD, variance — live data input',
+    topics: ['Range', 'Variance', 'Standard Deviation', 'Coefficient of Variation']
   },
   {
     id: '9',
-    title: 'Sequences and Series',
-    description: 'Arithmetic Progression (A.P.) and Geometric Progression (G.P.).',
-    topics: ['Sequences', 'Series', 'Arithmetic Progression (A.P.)', 'Geometric Progression (G.P.)', 'Relationship Between A.M. and G.M.', 'Sum to n Terms of Special Series']
+    title: 'Probability',
+    description: "Classical, conditional, Bayes' theorem simulator",
+    topics: ['Algebra of Events', 'Definition of Probability', 'Addition Theorem of Probability', 'Conditional Probability', 'Multiplication Theorem', 'Bayes Theorem']
   },
   {
     id: '10',
-    title: 'Straight Lines',
-    description: 'Various forms of equations of a line and distance of a point from a line.',
-    topics: ['Slope of a Line', 'Various Forms of the Equation of a Line', 'General Equation of a Line', 'Distance of a Point From a Line']
+    title: 'Sets, Relations and Functions',
+    description: 'Venn diagrams, domain/range, function plotter',
+    topics: ['Types of Sets', 'Venn Diagrams', 'Operations on Sets', 'Relations', 'Types of Functions', 'Domain, Co-domain and Range']
   },
   {
     id: '11',
-    title: 'Conic Sections',
-    description: 'Sections of a cone: circles, ellipses, parabolas, and hyperbolas.',
-    topics: ['Sections of a Cone', 'Circle', 'Parabola', 'Ellipse', 'Hyperbola']
+    title: 'Complex Numbers',
+    description: 'Argand plane, polar form, operations',
+    topics: ['Algebra of Complex Numbers', 'Argand Diagram', 'Polar Form of a Complex Number', 'Exponential Form', 'De Moivre’s Theorem']
   },
   {
     id: '12',
-    title: 'Introduction to Three Dimensional Geometry',
-    description: 'Coordinate axes, points in space, distance and section formulae.',
-    topics: ['Coordinate Axes and Coordinate Planes', 'Coordinates of a Point in Space', 'Distance Between Two Points', 'Section Formula']
+    title: 'Sequences and Series',
+    description: 'AP/GP simulators, sum formulas, convergence',
+    topics: ['Arithmetic Progression', 'Geometric Progression', 'Sum of n terms of a G.P.', 'Harmonic Progression', 'Arithmetico-Geometric Progression']
   },
   {
     id: '13',
-    title: 'Limits and Derivatives',
-    description: 'Intuitive idea of limits and derivatives of functions.',
-    topics: ['Intuitive Idea of Derivatives', 'Limits', 'Limits of Trigonometric Functions', 'Derivatives']
+    title: 'Permutations and Combinations',
+    description: 'nPr/nCr calculator, counting principle',
+    topics: ['Fundamental Principles of Counting', 'Factorial Notation', 'Permutations', 'Combinations', 'Properties of Combinations']
   },
   {
     id: '14',
-    title: 'Mathematical Reasoning',
-    description: 'Understanding mathematical statements and logic.',
-    topics: ['Statements', 'New Statements from Old', 'Special Words/Phrases', 'Implications', 'Validating Statements']
+    title: 'Mathematical Induction',
+    description: 'Step builder, domino visualiser',
+    topics: ['Principle of Mathematical Induction', 'Applications of Mathematical Induction', 'Binomial Theorem for Positive Integral Index']
   },
   {
     id: '15',
-    title: 'Statistics',
-    description: 'Measures of dispersion: range, mean deviation, variance, and standard deviation.',
-    topics: ['Measures of Dispersion', 'Range', 'Mean Deviation', 'Variance and Standard Deviation', 'Analysis of Frequency Distributions']
+    title: 'Limits',
+    description: 'ε-δ approach, standard limits, L\'Hôpital',
+    topics: ['Meaning of Limit', 'Algebra of Limits', 'Limits of Algebraic Functions', 'Limits of Trigonometric Functions', 'Limits of Exponential and Logarithmic Functions']
   },
   {
     id: '16',
-    title: 'Probability',
-    description: 'Random experiments, events, and axiomatic approach to probability.',
-    topics: ['Random Experiments', 'Event', 'Axiomatic Approach to Probability']
+    title: 'Differentiation',
+    description: 'Derivative plotter, chain rule, applications',
+    topics: ['Concept of Derivative', 'Derivatives of Standard Functions', 'Rules of Differentiation', 'Derivatives of Continuous Functions']
   }
 ];

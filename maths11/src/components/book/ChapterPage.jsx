@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { chapters } from '../../data/chapters';
 import { TopicSection } from './TopicSection';
-import { Simulators } from '../../simulators';
+import { Simulators, TopicSimulators } from '../../simulators';
 
 export const ChapterPage = ({ chapterId }) => {
   const chapter = chapters.find(ch => ch.id === chapterId);
@@ -45,14 +45,19 @@ export const ChapterPage = ({ chapterId }) => {
 
       <div>
         <h2 style={{ fontSize: '1.8rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '12px', marginBottom: '24px' }}>Topics</h2>
-        {chapter.topics.map((topic, index) => (
-          <TopicSection 
-            key={`${chapterId}-${index}`} 
-            title={topic} 
-            index={index} 
-            chapterId={chapterId}
-          />
-        ))}
+        {chapter.topics.map((topic, index) => {
+          const TopicSim = TopicSimulators[`${chapterId}-${index}`];
+          return (
+            <TopicSection 
+              key={`${chapterId}-${index}`} 
+              title={topic} 
+              index={index} 
+              chapterId={chapterId}
+            >
+              {TopicSim && <TopicSim />}
+            </TopicSection>
+          );
+        })}
       </div>
     </motion.div>
   );

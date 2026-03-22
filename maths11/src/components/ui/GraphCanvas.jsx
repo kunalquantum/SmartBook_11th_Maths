@@ -1,85 +1,103 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 
+/**
+ * Reusable SVG Coordinate Grid with HTML Labels
+ */
 export const GraphCanvas = ({ 
   width = 400, 
   height = 400, 
   domain = [-10, 10], 
   range = [-10, 10], 
-  drawFunction 
+  children
 }) => {
-  const canvasRef = useRef(null);
+  const [minX, maxX] = domain;
+  const [minY, maxY] = range;
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const w = canvas.width;
-    const h = canvas.height;
+  const mapX = (x) => ((x - minX) / (maxX - minX)) * width;
+  const mapY = (y) => height - ((y - minY) / (maxY - minY)) * height;
 
-    // Helpers to map coordinates
-    const mapX = (x) => ((x - domain[0]) / (domain[1] - domain[0])) * w;
-    const mapY = (y) => h - ((y - range[0]) / (range[1] - range[0])) * h;
-    const unmapX = (px) => domain[0] + (px / w) * (domain[1] - domain[0]);
+  const gridX = [];
+  for (let x = Math.ceil(minX); x <= Math.floor(maxX); x++) {
+    gridX.push(x);
+  }
 
-    // Clear canvas
-    ctx.clearRect(0, 0, w, h);
-
-    // Draw grid
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    
-    // Vertical grid lines
-    for (let x = Math.ceil(domain[0]); x <= Math.floor(domain[1]); x++) {
-      const px = mapX(x);
-      ctx.moveTo(px, 0);
-      ctx.lineTo(px, h);
-    }
-    
-    // Horizontal grid lines
-    for (let y = Math.ceil(range[0]); y <= Math.floor(range[1]); y++) {
-      const py = mapY(y);
-      ctx.moveTo(0, py);
-      ctx.lineTo(w, py);
-    }
-    ctx.stroke();
-
-    // Draw axes
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    // X-axis
-    const y0 = mapY(0);
-    if (y0 >= 0 && y0 <= h) {
-      ctx.moveTo(0, y0);
-      ctx.lineTo(w, y0);
-    }
-    // Y-axis
-    const x0 = mapX(0);
-    if (x0 >= 0 && x0 <= w) {
-      ctx.moveTo(x0, 0);
-      ctx.lineTo(x0, h);
-    }
-    ctx.stroke();
-
-    // Custom drawing
-    if (drawFunction) {
-      drawFunction(ctx, { w, h, mapX, mapY, unmapX, domain, range });
-    }
-  }, [width, height, domain, range, drawFunction]);
+  const gridY = [];
+  for (let y = Math.ceil(minY); y <= Math.floor(maxY); y++) {
+    gridY.push(y);
+  }
 
   return (
-    <div className="glass-panel" style={{ display: 'inline-block', padding: '16px', borderRadius: 'var(--radius-lg)' }}>
-      <canvas 
-        ref={canvasRef} 
-        width={width} 
-        height={height} 
-        style={{ 
-          background: 'var(--bg-surface-solid)', 
-          borderRadius: 'var(--radius-sm)',
-          boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.2)'
-        }}
-      />
+    <div style={{ position: 'relative', width, height, background: 'var(--bg2)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
+      {/* SVG Layer for grids and curves */}
+      <svg width={width} height={height} style={{ position: 'absolute', top: 0, left: 0 }}>
+        {/* Background Grid Lines */}
+        {gridX.map(x => (
+          <line key={`gx-${x}`} x1={mapX(x)} y1={0} x2={mapX(x)} y2={height} stroke="var(--border)" strokeWidth="1" />
+        ))}
+        {gridY.map(y => (
+          <line key={`gy-${y}`} x1={0} y1={mapY(y)} x2={width} y2={mapY(y)} stroke="var(--border)" strokeWidth="1" />
+        ))}
+
+        {/* Axes */}
+        <line x1={0} y1={mapY(0)} x2={width} y2={mapY(0)} stroke="var(--border2)" strokeWidth="2" />
+        <line x1={mapX(0)} y1={0} x2={mapX(0)} y2={height} stroke="var(--border2)" strokeWidth="2" />
+
+        {/* Children SVG Elements (curves, shapes, etc) */}
+        {React.Children.map(children, child => {
+          if (React.isValidElement(child) && child.props.isSvg) {
+            return React.cloneElement(child, { mapX, mapY, minX, maxX, minY, maxY, width, height });
+          }
+          return null;
+        })}
+      </svg>
+
+      {/* HTML Layer for Labels */}
+      {gridX.filter(x => x !== 0 && x % 2 === 0).map(x => (
+        <div key={`lx-${x}`} className="math-font" style={{
+          position: 'absolute', left: mapX(x), top: mapY(0) + 4, transform: 'translateX(-50%)',
+          fontSize: '10px', color: 'var(--text3)'
+        }}>
+          {x}
+        </div>
+      ))}
+      {gridY.filter(y => y !== 0 && y % 5 === 0).map(y => (
+        <div key={`ly-${y}`} className="math-font" style={{
+          position: 'absolute', left: mapX(0) - 24, top: mapY(y), transform: 'translateY(-50%)',
+          fontSize: '10px', color: 'var(--text3)', width: '20px', textAlign: 'right'
+        }}>
+          {y}
+        </div>
+      ))}
+
+      {/* Children HTML Elements (dynamic tooltips, labels) */}
+      {React.Children.map(children, child => {
+        if (React.isValidElement(child) && child.props.isHtml) {
+          return React.cloneElement(child, { mapX, mapY });
+        }
+        return null;
+      })}
+    </div>
+  );
+};
+
+export const SvgPath = ({ points = [], fill = 'none', stroke = 'var(--indigo)', strokeWidth = 2, mapX, mapY, isSvg, ...props }) => {
+  if (!points.length || !mapX || !mapY) return null;
+  const d = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${mapX(p[0])} ${mapY(p[1])}`).join(' ');
+  return <path d={d} fill={fill} stroke={stroke} strokeWidth={strokeWidth} {...props} />;
+};
+
+export const SvgCircle = ({ x = 0, y = 0, radius = 5, fill = 'var(--teal)', stroke = 'none', strokeWidth = 1, mapX, mapY, isSvg, ...props }) => {
+  if (!mapX || !mapY) return null;
+  // Radius calculation depends on domain/range aspect. Here we assume domain/range aspect is proportional, or we just use absolute pixels if it's a small dot.
+  // If we need data radius, we map it. Let's assume `radius` is in pixels for points.
+  return <circle cx={mapX(x)} cy={mapY(y)} r={radius} fill={fill} stroke={stroke} strokeWidth={strokeWidth} {...props} />;
+};
+
+export const HtmlLabel = ({ x, y, children, mapX, mapY, style = {}, isHtml }) => {
+  if (!mapX || !mapY) return null;
+  return (
+    <div style={{ position: 'absolute', left: mapX(x), top: mapY(y), transform: 'translate(-50%, -100%)', ...style }}>
+      {children}
     </div>
   );
 };

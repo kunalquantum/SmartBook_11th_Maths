@@ -1,38 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 :root {
-  /* Color Palette - Math Colors (Blues, Purples, Indigo) */
-  --primary: #4F46E5;
-  --primary-light: #818CF8;
-  --primary-dark: #3730A3;
+  --bg:     #0A0F1E;    /* deep navy */
+  --bg2:    #0F1628;
+  --bg3:    #141D35;
+  --bg4:    #1A2545;
+  --border: rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.13);
+  --blue:   #4A8FE7;    /* primary — coordinate grids */
+  --indigo: #6C63FF;    /* functions */
+  --teal:   #1CB8A0;    /* geometry */
+  --gold:   #F0B429;    /* formulas */
+  --coral:  #E85D54;    /* errors/negatives */
+  --green:  #36C27A;    /* correct/positive */
+  --text1:  #E8EEF8;
+  --text2:  #8A9DC0;
+  --text3:  #3D5280;
+  --font:   'Inter', system-ui, sans-serif;
+  --mono:   'JetBrains Mono', monospace;
   
-  --secondary: #8B5CF6;
-  --secondary-light: #A78BFA;
-  --secondary-dark: #6D28D9;
+  /* Mapped names for existing components */
+  --primary: var(--blue);
+  --primary-light: var(--indigo);
+  --secondary: var(--teal);
+  --accent: var(--gold);
+  --success: var(--green);
+  --info: var(--blue);
   
-  --accent: #F59E0B;
-  --success: #10B981;
-  --danger: #EF4444;
-  --info: #3B82F6;
+  --bg-color: var(--bg);
+  --bg-surface-solid: var(--bg2);
+  --text-primary: var(--text1);
+  --text-secondary: var(--text2);
+  --text-muted: var(--text3);
 
-  /* Neutrals */
-  --bg-color: #0F172A;
-  --bg-surface: rgba(30, 41, 59, 0.7);
-  --bg-surface-solid: #1E293B;
-  
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  
-  /* Glassmorphism */
-  --glass-bg: rgba(30, 41, 59, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
-  --radius-xl: 24px;
 }
 
 * {
@@ -42,33 +45,28 @@
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-primary);
+  font-family: var(--font);
+  background-color: var(--bg);
+  color: var(--text1);
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;
 }
 
-/* Typography */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  color: var(--text1);
 }
 
 .math-font {
-  font-family: 'Fira Code', monospace;
-  font-weight: 500;
+  font-family: var(--mono);
 }
 
-/* Glass Panel Utility */
 .glass-panel {
-  background: var(--glass-bg);
+  background: rgba(15, 22, 40, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
 }
 
@@ -76,29 +74,12 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.3s ease;
 }
 .glass-panel-hover:hover {
-  background: rgba(30, 41, 59, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(20, 29, 53, 0.8);
+  border: 1px solid var(--border2);
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-color);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--bg-surface-solid);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-dark);
-}
-
-/* Layout Utilities */
+/* Utilities */
 .app-container {
   display: flex;
   height: 100vh;
@@ -120,47 +101,18 @@ h1, h2, h3, h4, h5, h6 {
   padding: 2rem;
 }
 
-/* Background Gradients */
-.bg-gradient-math {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  overflow: hidden;
-  background: var(--bg-color);
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
-.bg-gradient-math::before,
-.bg-gradient-math::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.15;
+::-webkit-scrollbar-track {
+  background: var(--bg);
 }
-.bg-gradient-math::before {
-  top: -10%;
-  left: -10%;
-  width: 50vw;
-  height: 50vw;
-  background: var(--primary);
-  animation: float1 20s infinite alternate linear;
+::-webkit-scrollbar-thumb {
+  background: var(--bg3);
+  border-radius: 4px;
 }
-.bg-gradient-math::after {
-  bottom: -10%;
-  right: -10%;
-  width: 60vw;
-  height: 60vw;
-  background: var(--secondary);
-  animation: float2 25s infinite alternate linear;
-}
-
-@keyframes float1 {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(10%, 10%) scale(1.1); }
-}
-@keyframes float2 {
-  0% { transform: translate(0, 0) scale(1.1); }
-  100% { transform: translate(-10%, -10%) scale(1); }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bg4);
 }

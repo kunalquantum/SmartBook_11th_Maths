@@ -17,7 +17,7 @@ export const Sidebar = ({ activeChapter, onSelectChapter }) => {
     }}>
       <div style={{ padding: '24px' }}>
         <h3 style={{ margin: '0 0 8px 0', fontSize: '1.2rem', color: 'var(--text-secondary)' }}>Chapters</h3>
-        <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>Class 11 CBSE Mathematics</p>
+        <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>Maharashtra HSC Class 11 Maths</p>
       </div>
       
       <div style={{ flex: 1, overflowY: 'auto', padding: '0 12px 24px 12px' }}>
