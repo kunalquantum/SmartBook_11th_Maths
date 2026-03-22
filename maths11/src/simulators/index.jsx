@@ -67,6 +67,27 @@ import { GPSum } from './ch12_sequences/GP_Sum';
 import { HarmonicProgression } from './ch12_sequences/HarmonicProgression';
 import { AGProgression } from './ch12_sequences/AG_Progression';
 
+import { CountingPrinciple } from './ch13_perms/CountingPrinciple';
+import { FactorialNotation } from './ch13_perms/FactorialNotation';
+import { Permutations } from './ch13_perms/Permutations';
+import { Combinations } from './ch13_perms/Combinations';
+import { CombinationProperties } from './ch13_perms/CombinationProperties';
+
+import { InductionPrinciple } from './ch14_induction/InductionPrinciple';
+import { InductionApplications } from './ch14_induction/InductionApplications';
+import { BinomialTheorem } from './ch14_induction/BinomialTheorem';
+
+import { LimitMeaning } from './ch15_limits/LimitMeaning';
+import { LimitAlgebra } from './ch15_limits/LimitAlgebra';
+import { AlgebraicLimits } from './ch15_limits/AlgebraicLimits';
+import { TrigLimits } from './ch15_limits/TrigLimits';
+import { ExpLogLimits } from './ch15_limits/ExpLogLimits';
+
+import { DerivativePoint } from './ch16_ders/DerivativePoint';
+import { DerivativeFunction } from './ch16_ders/DerivativeFunction';
+import { AlgebraicDerivatives } from './ch16_ders/AlgebraicDerivatives';
+import { TrigDerivatives } from './ch16_ders/TrigDerivatives';
+
 export const TopicSimulators = {
   // Chapter 1: Angle and its Measurement
   '1-0': DirectedAngles,
@@ -147,6 +168,35 @@ export const TopicSimulators = {
   '12-2': GPSum,
   '12-3': HarmonicProgression,
   '12-4': AGProgression,
+
+  // Chapter 13: Permutations and Combinations
+  '13-0': CountingPrinciple,
+  '13-1': FactorialNotation,
+  '13-2': Permutations,
+  '13-3': Combinations,
+  '13-4': CombinationProperties,
+
+  // Chapter 14: Mathematical Induction
+  '14-0': InductionPrinciple,
+  '14-1': InductionApplications,
+  '14-2': BinomialTheorem,
+
+  // Chapter 15: Limits
+  '15-0': LimitMeaning,
+  '15-1': LimitAlgebra,
+  '15-2': AlgebraicLimits,
+  '15-3': TrigLimits,
+  '15-4': ExpLogLimits,
+
+  // Chapter 16: Derivatives
+  '16-0': DerivativePoint,
+  '16-1': DerivativeFunction,
+  '16-2': AlgebraicDerivatives,
+  '16-3': TrigDerivatives,
   
   // Future chapters will be mapped here
 };
+
+
+
+

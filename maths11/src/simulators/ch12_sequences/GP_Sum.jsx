@@ -60,7 +60,7 @@ export const GPSum = () => {
         <div style={{ height: '240px', background: 'var(--bg2)', borderRadius: '16px', border: '1px solid var(--border)', position: 'relative', overflow: 'hidden', padding: '15px' }}>
           <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
             {/* Target line for S_inf */}
-            {sInf !== Infinity && (
+            {sInf !== Infinity && maxVal !== 0 && (
               <motion.line
                 x1="0" y1={100 - (sInf / maxVal) * 90} x2="100" y2={100 - (sInf / maxVal) * 90}
                 stroke="var(--gold)" strokeWidth="0.5" strokeDasharray="2 1"
@@ -69,22 +69,26 @@ export const GPSum = () => {
             )}
             
             {/* Area under sum */}
-            <motion.path
-              d={partialSums.map((s, i) => `${i === 0 ? 'M' : 'L'} ${(i / (n - 1)) * 100} ${100 - (s / maxVal) * 90}`).join(' ') + ` L 100 100 L 0 100 Z`}
-              fill="var(--teal)" opacity="0.15"
-              animate={{ d: partialSums.map((s, i) => `${i === 0 ? 'M' : 'L'} ${(i / (n - 1)) * 100} ${100 - (s / maxVal) * 90}`).join(' ') + ` L 100 100 L 0 100 Z` }}
-              transition={{ type: 'spring', damping: 15 }}
-            />
+            {n > 1 && maxVal !== 0 && (
+              <motion.path
+                d={partialSums.map((s, i) => `${i === 0 ? 'M' : 'L'} ${(i / (n - 1)) * 100} ${100 - (s / maxVal) * 90}`).join(' ') + ` L 100 100 L 0 100 Z`}
+                fill="var(--teal)" opacity="0.15"
+                animate={{ d: partialSums.map((s, i) => `${i === 0 ? 'M' : 'L'} ${(i / (n - 1)) * 100} ${100 - (s / maxVal) * 90}`).join(' ') + ` L 100 100 L 0 100 Z` }}
+                transition={{ type: 'spring', damping: 15 }}
+              />
+            )}
 
             {/* Path of partial sums */}
-            <motion.path
-              d={partialSums.map((s, i) => `${i === 0 ? 'M' : 'L'} ${(i / (n - 1)) * 100} ${100 - (s / maxVal) * 90}`).join(' ')}
-              fill="none" stroke="var(--teal)" strokeWidth="1"
-              animate={{ d: partialSums.map((s, i) => `${i === 0 ? 'M' : 'L'} ${(i / (n - 1)) * 100} ${100 - (s / maxVal) * 90}`).join(' ') }}
-            />
+            {n > 1 && maxVal !== 0 && (
+              <motion.path
+                d={partialSums.map((s, i) => `${i === 0 ? 'M' : 'L'} ${(i / (n - 1)) * 100} ${100 - (s / maxVal) * 90}`).join(' ')}
+                fill="none" stroke="var(--teal)" strokeWidth="1"
+                animate={{ d: partialSums.map((s, i) => `${i === 0 ? 'M' : 'L'} ${(i / (n - 1)) * 100} ${100 - (s / maxVal) * 90}`).join(' ') }}
+              />
+            )}
 
             {/* Dots for partial sums */}
-            {partialSums.map((s, i) => (
+            {n > 1 && maxVal !== 0 && partialSums.map((s, i) => (
               <motion.circle
                 key={i} cx={(i / (n - 1)) * 100} cy={100 - (s / maxVal) * 90} r="1"
                 fill="var(--teal)"
@@ -92,6 +96,7 @@ export const GPSum = () => {
               />
             ))}
           </svg>
+
           <div style={{ position: 'absolute', top: '10px', left: '15px', color: 'var(--text3)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '1px' }}>Partial Sums S₁ → S{n}</div>
           {sInf !== Infinity && (
             <div style={{ position: 'absolute', top: `${100 - (sInf / maxVal) * 90}%`, right: '15px', transform: 'translateY(-100%)', color: 'var(--gold)', fontSize: '10px', fontWeight: 'bold' }}>
